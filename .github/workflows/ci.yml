@@ -4,6 +4,11 @@ on: [push]
 
 jobs:
   runs-on: ubuntu-latest
+  services:
+    mysql:
+      image: mysql:5.7
+      ports:
+        - 3306
   steps:
     - uses: actions/checkout@v1
     - name: setup golang v1.13
