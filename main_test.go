@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -30,17 +31,19 @@ func TestMain(m *testing.M) {
 	}
 
 	from, err := schemalex.NewSchemaSource(
-		"mysql://%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Local",
-		os.Getenv("DATABASE_USER"),
-		os.Getenv("DATABASE_PASSWORD"),
-		os.Getenv("DATABASE_HOST"),
-		os.Getenv("DATABASE_PORT"),
-		os.Getenv("DATABASE_NAME"),
+		fmt.Sprintf(
+			"mysql://%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Local",
+			os.Getenv("DATABASE_USER"),
+			os.Getenv("DATABASE_PASSWORD"),
+			os.Getenv("DATABASE_HOST"),
+			os.Getenv("DATABASE_PORT"),
+			os.Getenv("DATABASE_NAME"),
+		),
 	)
 	if err != nil {
 		log.Fatalf("failed to new schema source: %v", err)
 	}
-	to, err := shcemalex.NewSchemaSource("./docker/mysql/sql/initialize.sql")
+	to, err := schemalex.NewSchemaSource("./docker/mysql/sql/initialize.sql")
 	if err != nil {
 		log.Fatalf("failed to new schema source: %v", err)
 	}
