@@ -57,6 +57,9 @@ func TestMain(m *testing.M) {
 		log.Fatalf("failed to begin transaction: %v", err)
 	}
 	for _, stmt := range strings.Split(stmts.String(), ";") {
+		if len(stmt) == 0 {
+			continue
+		}
 		_, err := tx.Exec(stmt)
 		if err != nil {
 			log.Printf("failed to exec sql: %v", err)
