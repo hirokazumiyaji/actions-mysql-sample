@@ -30,9 +30,9 @@ func TestMain(m *testing.M) {
 		args []interface{}
 	}
 
-	from, err := schemalex.NewSchemaSource(
+	from, err := schemalex.NewMySQLSource(
 		fmt.Sprintf(
-			"mysql://%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Local",
+			"%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Local",
 			os.Getenv("DATABASE_USER"),
 			os.Getenv("DATABASE_PASSWORD"),
 			os.Getenv("DATABASE_HOST"),
