@@ -22,8 +22,8 @@ jobs:
       - name: setup database
         run: |
           mysql -uroot -proot -P${{ job.services.mysql.ports['3306'] }} -e 'CREATE DATABASE IF NOT EXISTS sample CHARACTER SET utf8mb4;'
-          mysql -uroot -proot -P${{ job.services.mysql.ports['3306'] }} < ./docker/mysql/sql/initialize.sql
-          mysql -uroot -proot -P${{ job.services.mysql.ports['3306'] }} -e 'SHOW TABLES;'
+          mysql -uroot -proot -P${{ job.services.mysql.ports['3306'] }} sample < ./docker/mysql/sql/initialize.sql
+          mysql -uroot -proot -P${{ job.services.mysql.ports['3306'] }} sample -e 'SHOW TABLES;'
       - name: test
         run: go test -v ./database ./models
         env:
