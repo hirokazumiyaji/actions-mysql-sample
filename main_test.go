@@ -55,24 +55,9 @@ func TestMain(m *testing.M) {
 		log.Fatalf("failed to diff: %v", err)
 	}
 
-	qs := make([]*query, 0)
-	for _, stmt := range strings.Split(stms, ";") {
-		stmt = strings.TrimSpace(stmt)
-		if len(stmt) == 0 {
-			continue
-		}
-		qs = append(
-			qs,
-			&query{
-				stmt: stmt[0],
-				args: stmt[1:],
-			},
-		)
-	}
-
 	tx := conn.Begin()
-	for _, q := range qs {
-		_, err := tx.Exec(q.stmt, q.args...)
+	for _, stmt := range strings.Split(stmts, ";") {
+		_, err := tx.Exec(stmt.String())
 		if err != nil {
 			log.Printf("failed to exec sql: %v", err)
 			tx.Rollback()
