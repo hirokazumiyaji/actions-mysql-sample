@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 	"testing"
 
 	"github.com/hirokazumiyaji/actions-mysql-sample/database"
@@ -19,5 +20,5 @@ func TestMain(m *testing.M) {
 		log.Fatalf("failed to ping: %v", err)
 	}
 
-	os.Exist(m.Run())
+	os.Exit(m.Run())
 }
