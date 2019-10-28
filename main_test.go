@@ -55,8 +55,11 @@ func TestMain(m *testing.M) {
 		log.Fatalf("failed to diff: %v", err)
 	}
 
-	tx := conn.Begin()
-	for _, stmt := range strings.Split(stmts, ";") {
+	tx, err := conn.Begin()
+	if err != nil {
+		log.Fatalf("failed to begin transaction: %v", err)
+	}
+	for _, stmt := range strings.Split(stmts.String(), ";") {
 		_, err := tx.Exec(stmt.String())
 		if err != nil {
 			log.Printf("failed to exec sql: %v", err)
