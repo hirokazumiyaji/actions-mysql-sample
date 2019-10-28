@@ -25,11 +25,6 @@ func TestMain(m *testing.M) {
 		log.Fatalf("failed to ping: %v", err)
 	}
 
-	type query struct {
-		stmt string
-		args []interface{}
-	}
-
 	from := schemalex.NewMySQLSource(
 		fmt.Sprintf(
 			"%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Local",
@@ -51,23 +46,16 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		log.Fatalf("failed to diff: %v", err)
 	}
-	log.Println(stmts.String())
-	tx, err := conn.Begin()
-	if err != nil {
-		log.Fatalf("failed to begin transaction: %v", err)
-	}
 	for _, stmt := range strings.Split(stmts.String(), ";") {
 		if len(stmt) == 0 {
 			continue
 		}
-		_, err := tx.Exec(stmt)
+		_, err := conn.Exec(stmt)
 		if err != nil {
 			log.Printf("failed to exec sql: %v", err)
-			tx.Rollback()
 			return
 		}
 	}
-	tx.Commit()
 
 	os.Exit(m.Run())
 }
