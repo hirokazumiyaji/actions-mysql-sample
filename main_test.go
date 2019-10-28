@@ -50,7 +50,7 @@ func TestMain(m *testing.M) {
 
 	stmts := &bytes.Buffer{}
 	p := schemalex.New()
-	err = diff.Statements(stmts, from, to, diff.WithTransaction(true), diff.WithParser(p))
+	err = diff.Sources(stmts, from, to, diff.WithTransaction(true), diff.WithParser(p))
 	if err != nil {
 		log.Fatalf("failed to diff: %v", err)
 	}
