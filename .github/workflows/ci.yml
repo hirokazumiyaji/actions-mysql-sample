@@ -25,7 +25,7 @@ jobs:
           mysql -uroot -proot -P${{ job.services.mysql.ports['3306'] }} sample < ./docker/mysql/sql/initialize.sql
           mysql -uroot -proot -P${{ job.services.mysql.ports['3306'] }} sample -e 'SHOW TABLES;'
       - name: test
-        run: go test -v ./database ./models
+        run: go test -v . ./database ./models
         env:
           DATABASE_USER: root
           DATABASE_PASSWORD: root
