@@ -20,5 +20,10 @@ func TestMain(m *testing.M) {
 		log.Fatalf("failed to ping: %v", err)
 	}
 
+	_, err = os.Stat("./docker/mysql/sq/initialize.sql")
+	if err != nil {
+		log.Printf("failed to stat: %v\n", err)
+	}
+
 	os.Exit(m.Run())
 }
