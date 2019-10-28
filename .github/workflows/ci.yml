@@ -19,11 +19,13 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: 1.13.x
+      - name: setup database
+        run: mysql -uroot -proot -P${{ job.services.mysql.ports['3306'] }} -e 'SHOW DATABASES;'
       - name: test
         run: go test -v ./database ./models
         env:
           DATABASE_USER: root
           DATABASE_PASSWORD: root
           DATABASE_HOST: localhost
-          DBTABASE_PORT: ${{ job.services.mysql.ports['3306'] }}
+          DATABASE_PORT: ${{ job.services.mysql.ports['3306'] }}
           DATABASE_NAME: sample
