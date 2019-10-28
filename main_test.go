@@ -51,7 +51,7 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		log.Fatalf("failed to diff: %v", err)
 	}
-
+	log.Println(stmts.String())
 	tx, err := conn.Begin()
 	if err != nil {
 		log.Fatalf("failed to begin transaction: %v", err)
