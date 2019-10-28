@@ -30,7 +30,7 @@ func TestMain(m *testing.M) {
 		args []interface{}
 	}
 
-	from, err := schemalex.NewMySQLSource(
+	from := schemalex.NewMySQLSource(
 		fmt.Sprintf(
 			"%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Local",
 			os.Getenv("DATABASE_USER"),
@@ -40,9 +40,6 @@ func TestMain(m *testing.M) {
 			os.Getenv("DATABASE_NAME"),
 		),
 	)
-	if err != nil {
-		log.Fatalf("failed to new schema source: %v", err)
-	}
 	to, err := schemalex.NewSchemaSource("./docker/mysql/sql/initialize.sql")
 	if err != nil {
 		log.Fatalf("failed to new schema source: %v", err)
