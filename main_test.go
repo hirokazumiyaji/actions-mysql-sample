@@ -50,9 +50,9 @@ func TestMain(m *testing.M) {
 
 	stmts := &bytes.Buffer{}
 	p := schemalex.New()
-	err = diff.Strings(stmts, from, to, diff.WithTransaction(true), diff.WithParser(p))
+	err = diff.Statements(stmts, from, to, diff.WithTransaction(true), diff.WithParser(p))
 	if err != nil {
-		return err
+		log.Fatalf("failed to diff: %v", err)
 	}
 
 	qs := make([]*query, 0)
